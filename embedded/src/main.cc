@@ -1,3 +1,3 @@
-zint main() {
+int main() {
 
 }
