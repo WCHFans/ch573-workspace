@@ -18,6 +18,7 @@ bazel build //embedded:firmware
 1. Arduino API? Yes, definitely that's one of the objectives of this project.
 1. More examples? **↓ ↓ ↓ ↓ ↓**
 1. Submitting PR? DEFINITELY WELCOME!
+1. Dirty codes? Sorry for that, this workspace came from another project and modified to adapt CH573, it might be "purer" in the future.
 
 ## References
 * [CH573/CH571 Datasheet](http://www.wch.cn/downloads/CH573DS1_PDF.html)
