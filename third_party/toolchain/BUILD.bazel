@@ -1,0 +1,67 @@
+package(default_visibility = ["//visibility:public"])
+
+load(":cc_config.bzl", "cc_toolchain_config")
+
+cc_toolchain_suite(
+    name = "riscv",
+    toolchains = {
+        "local|compiler": ":cc-compiler-local",
+        "k8": ":cc-compiler-local",
+        "riscv": ":riscv_toolchain",
+    },
+)
+
+filegroup(
+    name = "empty",
+    srcs = [],
+)
+
+filegroup(
+    name = "all",
+    srcs = [
+        "@toolchain_riscv//:all",
+    ] + glob(["wrapper/*"]),
+)
+
+filegroup(
+    name = "compiler_include",
+    srcs = [],
+)
+
+cc_toolchain_config(
+    name = "local_config",
+    cpu = "local",
+)
+
+cc_toolchain(
+    name = "cc-compiler-local",
+    all_files = ":empty",
+    compiler_files = ":empty",
+    dwp_files = ":empty",
+    linker_files = ":empty",
+    objcopy_files = ":empty",
+    strip_files = ":empty",
+    supports_param_files = 1,
+    tags = ["no-ide"],  # workaround for CLion
+    toolchain_config = ":local_config",
+    toolchain_identifier = "local_linux",
+)
+
+cc_toolchain_config(
+    name = "riscv_toolchain_config",
+    cpu = "riscv",
+)
+
+cc_toolchain(
+    name = "riscv_toolchain",
+    all_files = ":all",
+    compiler_files = ":all",
+    dwp_files = ":empty",
+    linker_files = ":all",
+    objcopy_files = ":all",
+    strip_files = ":all",
+    supports_param_files = True,
+    tags = ["no-ide"],  # workaround for CLion
+    toolchain_config = ":riscv_toolchain_config",
+    toolchain_identifier = "riscv-toolchain",
+)

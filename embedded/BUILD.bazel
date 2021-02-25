@@ -1,0 +1,27 @@
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "sdk",
+    srcs = glob([
+        "sdk/**/*.c",
+        "sdk/**/*.s",
+        "sdk/**/*.S",
+    ]),
+    hdrs = glob([
+        "sdk/**/*.h",
+    ]),
+    deps = [":ch573.ld"],
+)
+
+cc_binary(
+    name = "firmware",
+    srcs = ["src/main.cc"],
+    linkopts = ["-nostdlib -nostartfiles -static -T$(location :ch573.ld)"],
+    linkstatic = 1,
+    deps = [
+        ":ch573.ld",
+        ":sdk",
+    ],
+)

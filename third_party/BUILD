@@ -1,0 +1,1 @@
+# To make a third_party is a bazel package

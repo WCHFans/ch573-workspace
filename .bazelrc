@@ -1,0 +1,23 @@
+build -c opt
+
+# Make Bazel print out all options from rc files.
+build --announce_rc
+
+# Other build flags.
+
+# uncomment it if you want to debug, but I'm not sure if CH573 can be debugged.
+#build --copt="-g0"
+#build --copt="-gsplit-dwarf"
+build --copt="-O3"
+#build --linkopt="-Wl,--gdb-index"
+build --cxxopt=-std=c++1z
+
+
+######## Cross compile toolchain ########
+# Use our custom-configured c++ toolchain.
+build:riscv --crosstool_top="@toolchain//:riscv"
+build:riscv --cpu=riscv
+build:riscv --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+
+# Put user-specific options in .bazelrc.user
+try-import %workspace%/.bazelrc.user
